@@ -4,6 +4,9 @@ let currentSentence = sentences[i];
 let letterPosition = 0;
 let currentLetter = currentSentence.substring(letterPosition, letterPosition + 1);
 let numberOfMistakes = 0;
+let start;
+let keyPressed = 0;
+
 
 $('#keyboard-upper-container').hide();
 
@@ -40,7 +43,11 @@ $('#target-letter').text(currentLetter);
 
 $(document).keypress(function (e) {
 
-    let start = new Date();
+    if (keyPressed === 0) {
+        start = new Date();
+    }
+
+    keyPressed++;
 
     if (e.which === sentences[i].charCodeAt(letterPosition)) {
 
@@ -59,7 +66,24 @@ $(document).keypress(function (e) {
                 let elasped = (new Date() - start) / 60000;
                 let minutes = elasped;
                 let wpm = Math.round(54 / minutes - 2 * numberOfMistakes);
-                alert('You typed ' + wpm + ' words per minute!');
+                $('#feedback').append('<div id="wpmDiv">You typed ' + wpm + ' words per minute!</div>');
+                $('#wpmDiv').css({ 'font-size': '32px', 'font-weight': 'bold' });
+
+                setTimeout(function() {
+                    $.confirm({
+                        title: 'Game Over!',
+                        content: 'Do you want to play again?',
+                        buttons: {
+                            Yes: function () {
+                                location.reload();
+                            },
+                            No: function () {
+    
+                            },
+                        }
+                    });
+                }, 2500);
+
             }
 
             currentSentence = sentences[i];

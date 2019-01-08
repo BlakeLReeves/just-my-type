@@ -41,23 +41,24 @@ $(document).keypress(function (e) {
 
    if (e.which === sentences[i].charCodeAt(letterPosition)) {
 
+        $('#yellow-block').css('left', '+=17.5px');
+
         letterPosition++;
         currentLetter = currentSentence.substring(letterPosition, letterPosition + 1);
         $('#target-letter').text(currentLetter);
     
         if (letterPosition === currentSentence.length) {
     
-            i++;
-    
-        } else {
+            i++
             
             currentSentence = sentences[i];
             $('#sentence').text(currentSentence);
             letterPosition = 0;
             currentLetter = currentSentence.substring(letterPosition, letterPosition + 1);
             $('#target-letter').text(currentLetter);
+            $('#yellow-block').css('left', '15.5px');
             console.log(letterPosition);
     
-        }
+        } 
     }
 });
